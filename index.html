@@ -177,7 +177,11 @@ $("#pub").innerHTML=`<span class="badge">PEER-REVIEWED JOURNAL ARTICLE</span><h3
 $("#sk").innerHTML=DATA.skills.map(s=>`<div class="card rv"><h3><span style="color:var(--cy)">${s[1]}</span> ${s[0]}</h3>${chips(s[2])}</div>`).join("");
 $("#ach").innerHTML=DATA.ach.map(a=>`<div class="card rv tilt"><span class="badge">ACHIEVEMENT</span><h3>${a[0]}</h3><p>${a[1]}</p></div>`).join("");
 const toast=m=>{const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("on"),3200)};
-document.querySelectorAll("[data-cv]").forEach(a=>a.addEventListener("click",async e=>{e.preventDefault();try{const d=await claude.use("downloads");if(!d)throw 0;const u=Uint8Array.from(atob(DATA.cvB64),c=>c.charCodeAt(0));await d.save({filename:"Albina_Mussakhan_CV.pdf",data:u})}catch(x){if(x&&x.code==="declined")return;toast("Download unavailable here. Please open the page in claude.ai or host the PDF alongside it.")}}));
+document.querySelectorAll("[data-cv]").forEach(a => {
+  a.href = "https://albinamussakhan.github.io/Albina_Mussakhan_CV.pdf";
+  a.target = "_blank";
+  a.rel = "noopener";
+});
 document.querySelectorAll("[data-pub]").forEach(a=>{a.target="_blank";a.rel="noopener"});
 const cl=[["Email me","email","mailto:"],["LinkedIn","linkedin",""],["GitHub","github",""]];
 document.querySelectorAll("[data-ph]").forEach((a,i)=>{const v=DATA.contact[cl[i][1]];if(v){a.href=cl[i][2]+v;a.target="_blank";a.rel="noopener"}else a.addEventListener("click",e=>{e.preventDefault();toast(cl[i][0]+" link is a placeholder — add the real one.")})});
